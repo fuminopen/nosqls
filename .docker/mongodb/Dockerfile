@@ -7,17 +7,21 @@ RUN set -o vi
 
 # install curl
 RUN apt -y update && \
+    apt -y install gnupg && \
     apt -y install curl
 
 # install mongodb
-RUN curl https://fastdl.mongodb.org/linux/mongodb-linux-aarch64-ubuntu2204-6.0.6.tgz --output ~/mongodb.tgz
+RUN curl -fsSL https://pgp.mongodb.com/server-6.0.asc | \
+   gpg -o /usr/share/keyrings/mongodb-server-6.0.gpg \
+   --dearmor
 
-# decompress mongdb tgz file
-RUN tar xvfz ~/mongodb.tgz -C ~/
+RUN echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | \
+    tee /etc/apt/sources.list.d/mongodb-org-6.0.list
 
-# move mongod and mongs to /usr/local/bin
-RUN mv ~/mongo*/bin/mongo* /usr/local/bin/
+RUN apt -y update
+
+RUN apt-get install -y mongodb-org
 
 RUN echo 'mongod is at ' $(which mongod)
 
-RUN echo 'mongos is at ' $(which mongos)
+RUN echo 'mongosh is at ' $(which mongosh)
