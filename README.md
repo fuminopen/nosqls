@@ -54,3 +54,40 @@ or コンテナを使わずインストールしている場合
 ```sh
 $ mongosh
 ```
+
+## CRUD
+
+### READ
+
+## 用語
+
+- Database
+データベース。SQLでいうところのデータベースに相当する。
+
+- Collection
+SQLでいうところのテーブルに相当する。
+
+- Record
+SQLでいうところのレコードに相当する。
+
+## コマンド
+
+- databaseのリスト。SQLと同じ。
+
+ ```mongosh
+> show dbs
+```
+
+- 使用するdatabaseの選択
+まだ存在していないdatabaseでもOK
+
+```mongosh
+> use flightData
+```
+
+- コレクションの作成
+同じくまだ存在していないコレクションでもOK
+
+```mongosh
+> db.flightData.insertOne({})
+```
