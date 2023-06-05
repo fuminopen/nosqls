@@ -55,10 +55,6 @@ or コンテナを使わずインストールしている場合
 $ mongosh
 ```
 
-## CRUD
-
-### READ
-
 ## 用語
 
 - Database
@@ -70,7 +66,31 @@ SQLでいうところのテーブルに相当する。
 - Record
 SQLでいうところのレコードに相当する。
 
-## コマンド
+## CRUD
+
+### CREATE
+
+- Recordの作成
+
+```mongosh
+> db.flights.insertOne({})
+{
+  acknowledged: true,
+  insertedId: ObjectId("647d6515c8bd57d7d93e8747")
+}
+```
+
+- Collectionの作成
+同じくまだ存在していないCollectionでもOK。recordを作成すると自動的にCollectionも作成される。
+
+- databaseの作成 (使用するdatabaseの選択)
+まだ存在していないdatabaseでもOK。存在しないdatabaseを選択した場合自動的に作成される。
+
+```mongosh
+> use flightData
+```
+
+### READ
 
 - databaseのリスト。SQLと同じ。
 
@@ -78,16 +98,56 @@ SQLでいうところのレコードに相当する。
 > show dbs
 ```
 
-- 使用するdatabaseの選択
-まだ存在していないdatabaseでもOK
+- databaseに存在するのリスト
 
 ```mongosh
-> use flightData
+> show collections
 ```
 
-- コレクションの作成
-同じくまだ存在していないコレクションでもOK
+- collectionに存在するrecordのリスト
+
+オプションなし
+```mongosh
+> db.flights.find()
+[
+  { _id: ObjectId("647d6515c8bd57d7d93e8747") },
+  {
+    _id: ObjectId("647d6535c8bd57d7d93e8748"),
+    departureAirport: 'OKI',
+    arrivalAirport: 'HND'
+  },
+  {
+    _id: ObjectId("647d6545c8bd57d7d93e8749"),
+    departureAirport: 'OKI',
+    arrivalAirport: 'HND',
+    distance: 1200,
+    domestic: true
+  }
+]
+```
+綺麗に出力
+```mongosh
+> db.flights.find().pretty()
+[
+  { _id: ObjectId("647d6515c8bd57d7d93e8747") },
+  {
+    _id: ObjectId("647d6535c8bd57d7d93e8748"),
+    departureAirport: 'OKI',
+    arrivalAirport: 'HND'
+  },
+  {
+    _id: ObjectId("647d6545c8bd57d7d93e8749"),
+    departureAirport: 'OKI',
+    arrivalAirport: 'HND',
+    distance: 1200,
+    domestic: true
+  }
+]
+```
+
+### WRITE
+
+- レコードを一つ作成
 
 ```mongosh
-> db.flightData.insertOne({})
-```
+> 
