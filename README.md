@@ -91,3 +91,58 @@ SQLでいうところのレコードに相当する。
 ```mongosh
 > db.flightData.insertOne({})
 ```
+
+### update
+
+```
+> use carRental
+switched to db carRental
+
+> db.companies.insertOne({})
+{
+  acknowledged: true,
+  insertedId: ObjectId("64a02696ece380d2c42f0989")
+}
+
+> db.companies.updateOne()db.companies.updateOne({_id: ObjectId("64a0266aece380d2c42f0988")}, {$set: {"name": "fumi-rental"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+> db.companies.find()
+[
+  { _id: ObjectId("64a0266aece380d2c42f0988"), name: 'fumi-rental' }
+]
+
+> db.companies.insertOne({})
+{
+  acknowledged: true,
+  insertedId: ObjectId("64a02696ece380d2c42f0989")
+}
+
+> db.companies.updateMany({}, {$set: {established: "2023-01-01"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+> db.companies.find()
+[
+  {
+    _id: ObjectId("64a0266aece380d2c42f0988"),
+    name: 'fumi-rental',
+    established: '2023-01-01'
+  },
+  {
+    _id: ObjectId("64a02696ece380d2c42f0989"),
+    established: '2023-01-01'
+  }
+]
+```
